@@ -5,7 +5,14 @@ A super simple FastAPI application that allows students to view and sign up for 
 ## Features
 
 - View all available extracurricular activities
-- Sign up for activities
+- Teachers can sign up and unregister students after logging in
+- Students can view activities and participants without logging in
+
+## Teacher access
+
+Teacher credentials are stored in `teachers.json` as salted PBKDF2 password hashes.
+The included demo account is `teacher` with password `teacher123`; change or replace
+this account before deploying the application.
 
 ## Getting Started
 
@@ -30,7 +37,11 @@ A super simple FastAPI application that allows students to view and sign up for 
 | Method | Endpoint                                                          | Description                                                         |
 | ------ | ----------------------------------------------------------------- | ------------------------------------------------------------------- |
 | GET    | `/activities`                                                     | Get all activities with their details and current participant count |
-| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Sign up for an activity                                             |
+| POST   | `/auth/login`                                                      | Log in as a teacher using a JSON username and password               |
+| POST   | `/auth/logout`                                                     | End the current teacher session                                      |
+| GET    | `/auth/me`                                                         | Get the current teacher session                                      |
+| POST   | `/activities/{activity_name}/signup?email=student@mergington.edu` | Teacher-only student signup                                         |
+| DELETE | `/activities/{activity_name}/unregister?email=student@mergington.edu` | Teacher-only student removal                                      |
 
 ## Data Model
 
